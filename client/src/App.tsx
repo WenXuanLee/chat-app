@@ -7,7 +7,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Join />} />
-        <Route path="/chat" element={<Chat location={{ search: '' }} />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </Router>
   );
