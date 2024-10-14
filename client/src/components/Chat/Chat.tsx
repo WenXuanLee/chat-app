@@ -1,9 +1,12 @@
+import './Chat.css';
 import { useState, useEffect, KeyboardEvent } from 'react'
 import { useLocation } from 'react-router';
 import queryString from 'query-string'
 import io, { Socket } from 'socket.io-client'
-
-
+import InfoBar from '../InfoBar/InfoBar';
+import Input from '../Input/Input';
+import Messages from '../Messages/Messages';
+import { MessageInterface } from '../../interface/message';
 let socket: Socket;
 
 const Chat = () => {
@@ -11,7 +14,7 @@ const Chat = () => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<MessageInterface[]>([]);
   const ENDPOINT = 'localhost:4000';
 
   useEffect(() => {
@@ -57,10 +60,12 @@ const Chat = () => {
   return (
     <div className="outerContainer">
       <div className="innerContainer">
-        <input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' ? sendMessage(e) : null}
+        <InfoBar room={room} />
+        <Messages name={name} messages={messages} />
+        <Input
+          message={message}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
         />
       </div>
       {/* Chat component content goes here */}
