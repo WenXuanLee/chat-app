@@ -7,12 +7,14 @@ import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
 import { MessageInterface } from '../../interface/message';
+import TextContainer from '../TextContainer/TextContainer';
 let socket: Socket;
 
 const Chat = () => {
   const location = useLocation();
   const [name, setName] = useState('');
   const [room, setRoom] = useState('');
+  const [users, setUsers] = useState<{ name: string }[]>([]);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<MessageInterface[]>([]);
   const ENDPOINT = 'localhost:4000';
@@ -29,11 +31,7 @@ const Chat = () => {
         alert(error);
       }  
     });
-    return () => {
-      // socket.emit('disconnect');
-      // socket.off();
-    }
-  }, []);
+  }, [location.search, ENDPOINT]);
 
   useEffect(() => {
     socket.on('message', (message) => {
@@ -42,8 +40,13 @@ const Chat = () => {
       });
     });
 
+    socket.on('roomData', ({ users }) => {
+      setUsers(users);
+    });
+  
     return () => {
       socket.off('message');
+      socket.off('roomData');
     };
   }, []);
 
@@ -68,6 +71,7 @@ const Chat = () => {
           sendMessage={sendMessage}
         />
       </div>
+      <TextContainer users={users}/>
       {/* Chat component content goes here */}
     </div>
   );

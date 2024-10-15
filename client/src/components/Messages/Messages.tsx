@@ -6,7 +6,7 @@ import { MessageInterface } from '../../interface/message';
 
 const Messages = ({ messages, name }: { messages: MessageInterface[], name: string }) => {
   return (
-    <ScrollToBottom>
+    <ScrollToBottom className="messages">
       {messages.map((message, i) => (
         <div key={`${message}-${i}`}>
           <Message message={message} name={name} />
