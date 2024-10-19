@@ -1,6 +1,7 @@
 const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
+const cors = require('cors');
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./user.js')
 const PORT = process.env.PORT || 4000;
@@ -55,10 +56,12 @@ io.on('connection', (socket) => {
 });
 
 app.use(router);
-
+app.use(cors);
 server.listen(PORT, (token) => {
   console.warn(`Server has started on port ${PORT}`);
   if (!token) {
     console.warn("port already in use");
   }
 });
+
+module.exports = app;
