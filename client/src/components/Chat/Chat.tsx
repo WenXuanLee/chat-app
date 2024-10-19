@@ -17,7 +17,7 @@ const Chat = () => {
   const [users, setUsers] = useState<{ name: string }[]>([]);
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<MessageInterface[]>([]);
-  const ENDPOINT = 'localhost:4000';
+  const ENDPOINT = 'https://chat-app-server-8pj7kf6fq-wenxuanlees-projects.vercel.app/';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
